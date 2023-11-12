@@ -1,0 +1,24 @@
+{
+  "name": "wp-kasir",
+  "version": "0.0.1",
+  "description": "Apikasi Kasir POS berbasis WordPress",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adityathok/wp-kasir.git"
+  },
+  "keywords": [
+    "point-of-sale",
+    "wordpress",
+    "kasir"
+  ],
+  "author": "adityathok",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adityathok/wp-kasir/issues"
+  },
+  "homepage": "https://github.com/adityathok/wp-kasir#readme"
+}
