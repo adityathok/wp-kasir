@@ -41,7 +41,7 @@ class Produk {
         $args = array(
             'labels'             => $labels,
             'public'             => true,
-            'publicly_queryable' => true,
+            'publicly_queryable' => false,
             'show_ui'            => true,
             'show_in_menu'       => true,
             'query_var'          => true,
@@ -52,6 +52,7 @@ class Produk {
             'menu_position'      => 3,
             'supports'           => array('title', 'thumbnail'),
             'show_in_rest'       => true,
+            'menu_icon'          => 'dashicons-store'
         );
 
         register_post_type($this->post_type, $args);
