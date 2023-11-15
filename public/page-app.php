@@ -21,10 +21,17 @@ defined('ABSPATH') || exit;
 	<?php wp_head(); ?>
 </head>
 
-<body>
+<body <?php body_class(); ?> <?php wpzaro_body_attributes(); ?>>
     
-
+    <?php
+    // disable admin bar
+    add_filter('show_admin_bar', '__return_false');
+    // Navbar
+    require_once(WPKASIR_PLUGIN_DIR . 'public/app-navbar.php');
+    ?>
 
 </body>
+
+<?php wp_footer(); ?>
 
 </html>
