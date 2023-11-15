@@ -1,3 +1,15 @@
 html {
     margin: 0 !important;
 }
+
+@media (min-width: 768px) {
+    #navbarApp .dropdown-menu {
+        transform: translateX(0);
+    }
+    #navbarApp .dropdown-menu.show {
+        transform: translateX(-53%);
+    }
+    #app-main .col-products {
+        height: calc(100vh - 56px);
+    }
+}

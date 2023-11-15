@@ -8,11 +8,11 @@
       WP Kasir
     </a>
 
-    <button class="navbar-toggler border-0 " type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler border-0 " type="button" data-bs-toggle="collapse" data-bs-target="#navbarApp" aria-controls="navbarApp" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarScroll">
+    <div class="collapse navbar-collapse" id="navbarApp">
       <ul class="navbar-nav ms-auto my-2 my-lg-0">
         <li class="nav-item">
           <a class="nav-link" href="<?php echo get_permalink(); ?>/?pg=produk">

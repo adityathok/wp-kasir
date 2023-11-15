@@ -28,6 +28,17 @@ defined('ABSPATH') || exit;
     add_filter('show_admin_bar', '__return_false');
     // Navbar
     require_once(WPKASIR_PLUGIN_DIR . 'public/app-navbar.php');
+
+    ///get page
+    $pg = isset($_GET['pg'])?$_GET['pg']:'';
+    switch ($pg) {
+        case 'produk':
+            require_once(WPKASIR_PLUGIN_DIR . 'public/app-produk.php');
+            break;        
+        default:
+            require_once(WPKASIR_PLUGIN_DIR . 'public/app-main.php');
+            break;
+    }
     ?>
 
 </body>
