@@ -7,16 +7,18 @@
 */
 
 namespace WPKASIR;
+use WP_REST_Server;
 
 class Produk {
 
 	protected $post_type    = 'wpkasir_produk';
-	protected $taxonomy     = 'wpkasir_kategori_produk';
+	protected $kategori     = 'wpkasir_kategori_produk';
+	protected $brand        = 'wpkasir_brand_produk';
 
     public function autoload(){
         add_action('init', array($this, 'register_taxonomy'));
         add_action('init', array($this, 'register_post_type'));
-        add_filter('rwmb_meta_boxes', array($this, 'register_meta_boxes'));
+        add_filter('cmb2_admin_init', array($this, 'register_meta_boxes'));
     }
     
     public function register_post_type(){        
@@ -48,7 +50,8 @@ class Produk {
             'has_archive'        => true,
             'hierarchical'       => false,
             'menu_position'      => 3,
-            'supports'           => array('title', 'thumbnail')
+            'supports'           => array('title', 'thumbnail'),
+            'show_in_rest'       => true,
         );
 
         register_post_type($this->post_type, $args);
@@ -57,57 +60,76 @@ class Produk {
     public function register_taxonomy() {
         $args = array(
             'labels'            => [
-                'name'          => __('Kategori Produk', 'text-domain'),
-                'singular_name' => __('Kategori Produk', 'text-domain'),
-                'menu_name'     => __('Kategori Produk', 'text-domain'),
+                'name'          => __('Kategori Produk', 'wp-kasir'),
+                'singular_name' => __('Kategori Produk', 'wp-kasir'),
+                'menu_name'     => __('Kategori Produk', 'wp-kasir'),
             ],
             'public'            => true,
             'hierarchical'      => true,
             'show_admin_column' => true,
-            'rewrite'           => array('slug' => $this->taxonomy),
+            'rewrite'           => array('slug' => $this->kategori),
             'show_ui'           => true,
             'query_var'         => true
         );
-        register_taxonomy($this->taxonomy, $this->post_type, $args);
+        register_taxonomy($this->kategori, $this->post_type, $args);
+
+        $args_brand = array(
+            'labels'            => [
+                'name'          => __('Brand Produk', 'wp-kasir'),
+                'singular_name' => __('Brand Produk', 'wp-kasir'),
+                'menu_name'     => __('Brand Produk', 'wp-kasir'),
+            ],
+            'public'            => true,
+            'hierarchical'      => true,
+            'show_admin_column' => true,
+            'rewrite'           => array('slug' => $this->brand),
+            'show_ui'           => true,
+            'query_var'         => true
+        );
+        register_taxonomy($this->brand, $this->post_type, $args_brand);
     }
 
-    public function register_meta_boxes($meta_boxes){  
-        $prefix = '';
-
-        $meta_boxes[] = [
-            'title'      => esc_html__( 'Detail Produk', 'wp-kasir' ),
-            'id'         => 'detail_wpkasir_produk',
-            'post_types' => [$this->post_type],
-            'context'    => 'after_title',
-            'fields'     => [
-                [
-                    'type' => 'text',
-                    'name' => esc_html__( 'KODE', 'wp-kasir' ),
-                    'id'   => $prefix . 'kode',
-                    'desc' => esc_html__( 'Kode Produk', 'wp-kasir' ),
-                    'std'  => rand(100000,999999),
-                ],
-                [
-                    'type' => 'number',
-                    'name' => esc_html__( 'Harga', 'wp-kasir' ),
-                    'id'   => $prefix . 'harga',
-                    'desc' => esc_html__( 'angka tanpa tanda baca', 'wp-kasir' ),
-                    'std'  => 1000,
-                ],
-                [
-                    'type' => 'number',
-                    'name' => esc_html__( 'Stok', 'wp-kasir' ),
-                    'id'   => $prefix . 'stok',
-                ],
-                [
-                    'type' => 'textarea',
-                    'name' => esc_html__( 'Deskripsi', 'wp-kasir' ),
-                    'id'   => $prefix . 'deskripsi',
-                ],
-            ],
-        ];
-
-        return $meta_boxes;
+    public function register_meta_boxes(){
+        $cmb = new_cmb2_box( array(
+            'id'            => 'produk_metabox',
+            'title'         => __( 'Detail Produk', 'wp-kasir' ),
+            'object_types'  => array( $this->post_type ), 
+            'context'       => 'normal',
+            'priority'      => 'high',
+            'show_names'    => true,
+        ) );
+        $cmb->add_field( array(
+            'name'          => __( 'SKU', 'wp-kasir' ),
+            'desc'          => __( 'Stock Keeping Unit / Kode Unik Produk', 'wp-kasir' ),
+            'id'            => 'sku',
+            'type'          => 'text',
+            'attributes'    => array(
+                'required'  => 'required',
+            ),
+        ) );
+        $cmb->add_field( array(
+            'name'          => __( 'Harga', 'wp-kasir' ),
+            'desc'          => __( '', 'wp-kasir' ),
+            'id'            => 'harga',
+            'type'          => 'text_money',
+            'attributes'    => array(
+                'required'  => 'required',
+            ),
+            'before_field' => 'Rp ',
+        ) );
+        $cmb->add_field( array(
+            'name'          => __( 'Harga Promo', 'wp-kasir' ),
+            'desc'          => __( '', 'wp-kasir' ),
+            'id'            => 'harga_promo',
+            'type'          => 'text_money',
+            'before_field'  => 'Rp ',
+        ) );
+        $cmb->add_field( array(
+            'name'          => __( 'Deskripsi Produk', 'wp-kasir' ),
+            'desc'          => __( '', 'wp-kasir' ),
+            'id'            => 'deskripsi',
+            'type'          => 'wysiwyg',
+        ) );
     }
 }
 
