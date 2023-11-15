@@ -32,6 +32,7 @@ if (!defined('WPKASIR_PLUGIN_URL'))	define('WPKASIR_PLUGIN_URL', plugin_dir_url(
 $includes = [
 	'admin/AdminPage.php',
 	'produk/Produk.php',
+	'public/public.php',
 ];
 
 foreach ($includes as $include) {
