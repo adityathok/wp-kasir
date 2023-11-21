@@ -1,4 +1,4 @@
-<nav class="position-fixed top-0 w-100 navbar navbar-expand-lg bg-body-tertiary shadow">
+<nav class="position-fixed top-0 w-100 z-3 navbar navbar-expand-lg bg-body-tertiary shadow">
   <div class="container-fluid" style="--bs-nav-link-font-size: 0.9rem;">
 
     <a class="navbar-brand" href="<?php echo get_permalink(); ?>">
@@ -48,3 +48,5 @@
   </div>
 
 </nav>
+
+<div class="mt-4"></div>
